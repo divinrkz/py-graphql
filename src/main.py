@@ -1,7 +1,7 @@
 import asyncio
 
 import graphene
-from graphene import ObjectType, Field, Int
+from graphene import ObjectType, Field, Int, List
 
 from starlette.applications import Starlette
 from starlette_graphene3 import GraphQLApp, make_playground_handler
@@ -12,6 +12,7 @@ import json
 class Query(ObjectType):
     product_overview = Field(ProductOverview)
     product_details = Field(ProductType, id=Int())
+    products_by_category = List(ProductType, categoryId=Int())
 
     @staticmethod
     async def resolve_product_overview(self, info):
@@ -27,8 +28,15 @@ class Query(ObjectType):
     async def resolve_product_details(self, info, id):
         with open("src/products.json") as products:
             products = json.load(products)
-        product = next((item for item in products if item['id'] == id), None)
+        product = next((product for product in products if product['id'] == id), None)
         return product
+
+    @staticmethod
+    async def resolve_products_by_category(self, info, categoryId):
+        with open("src/products.json") as products_json:
+            products = json.load(products_json)
+        products = [product for product in products if product['category'] == categoryId]
+        return products
 
 
 class Subscription(graphene.ObjectType):
