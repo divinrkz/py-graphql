@@ -19,9 +19,9 @@ class Query(ObjectType):
         with open("src/products.json") as products_json:
             products = json.load(products_json)
         return {
-                    'products': products,
-                    'totalProducts':  len(products),
-                    'totalPrice': (sum(d.get('price', 0) for d in products)),
+            'products': products,
+            'totalProducts': len(products),
+            'totalPrice': (sum(d.get('price', 0) for d in products)),
         }
 
     @staticmethod
@@ -52,3 +52,19 @@ app = Starlette()
 schema = graphene.Schema(query=Query, subscription=Subscription)
 
 app.mount("/", GraphQLApp(schema, on_get=make_playground_handler()))  # Playground IDE
+
+## CLI Test
+# Product Overview Query
+product_overview_query \
+    = '{ ' \
+      '    productOverview ' \
+      '    { ' \
+      '        products ' \
+      '            {' \
+      '                 name, price, category ' \
+      '            },' \
+      '        totalProducts,' \
+      '        totalPrice' \
+      '}'
+product_overview_results = schema.execute(product_overview_query)
+print(product_overview_results.data)
