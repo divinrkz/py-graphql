@@ -1,22 +1,30 @@
 import asyncio
 
 import graphene
-from graphene import ObjectType, Field
+from graphene import ObjectType, Field, Int
 
 from starlette.applications import Starlette
 from starlette_graphene3 import GraphQLApp, make_playground_handler
-from src.schemas.schema import ProductOverview
+from src.schemas.schema import ProductOverview, ProductType
 import json
 
 
 class Query(ObjectType):
-    products = None
     product_overview = Field(ProductOverview)
+    product_details = Field(ProductType, id=Int())
 
+    @staticmethod
     async def resolve_product_overview(self, info):
+        with open("src/products.json") as products_json:
+            products = json.load(products_json)
+        return {'products': products}
+
+    @staticmethod
+    async def resolve_product_details(self, info, id):
         with open("src/products.json") as products:
             products = json.load(products)
-        return {'products': products}
+        product = next((item for item in products if item['id'] == id), None)
+        return product
 
 
 class Subscription(graphene.ObjectType):
