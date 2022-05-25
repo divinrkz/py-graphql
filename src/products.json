@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Apple",
+    "price": 50,
+    "category": 1
+  },
+  {
+    "id": 2,
+    "name": "Banana",
+    "price": 20,
+    "category": 1
+  },
+  {
+    "id": 3,
+    "name": "Orange",
+    "price": 15,
+    "category": 1
+  },
+  {
+    "id": 4,
+    "name": "Shirt",
+    "price": 120,
+    "category": 2
+  },
+  {
+    "id": 5,
+    "name": "Short",
+    "price": 100,
+    "category": 2
+  },
+  {
+    "id": 6,
+    "name": "Sock",
+    "price": 20,
+    "category": 2
+  },
+  {
+    "id": 7,
+    "name": "Chocolate",
+    "price": 80,
+    "category": 3
+  },
+  {
+    "id": 8,
+    "name": "Chips",
+    "price": 85,
+    "category": 3
+  },
+  {
+    "id": 9,
+    "name": "Pink Candy",
+    "price": 60,
+    "category": 3
+  }
+]
