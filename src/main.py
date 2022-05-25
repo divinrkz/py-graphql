@@ -17,7 +17,11 @@ class Query(ObjectType):
     async def resolve_product_overview(self, info):
         with open("src/products.json") as products_json:
             products = json.load(products_json)
-        return {'products': products}
+        return {
+                    'products': products,
+                    'totalProducts':  len(products),
+                    'totalPrice': (sum(d.get('price', 0) for d in products)),
+        }
 
     @staticmethod
     async def resolve_product_details(self, info, id):
